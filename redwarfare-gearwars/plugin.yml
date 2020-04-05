@@ -1,0 +1,11 @@
+name: GearWars
+main: me.libraryaddict.gearwars.GearWars
+author: libraryaddict
+version: §fbuilt on §a${buildDate}
+depend: [ProtocolLib, InventoryApi]
+load: STARTUP
+commands:
+  forcestart:
+    aliases: [fstart]
+  time:
+  goto:

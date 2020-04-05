@@ -1,0 +1,4 @@
+This is not provided in a maven repository as the relevant jars are outdated and it would also be easier for any other developers to modify the plugin.
+As well as provide anyone who wishes to run this plugin, the jars needed.
+
+This is not a clean idea, but this plugin is outdated and is only uploaded as a courtesy as no further work will be done on it.
