@@ -629,13 +629,13 @@ public class UtilLoc
     {
         try
         {
-            CompoundTag ***REMOVED*** = NbtIo.readCompressed(new FileInputStream(levelDat));
+            CompoundTag root = NbtIo.readCompressed(new FileInputStream(levelDat));
 
-            CompoundTag data = ***REMOVED***.getCompound("Data");
+            CompoundTag data = root.getCompound("Data");
             data.putString("generatorName", "flat");
             data.putString("generatorOptions", "3;minecraft:air;1;minecraft:air");
 
-            NbtIo.writeCompressed(***REMOVED***, new FileOutputStream(levelDat));
+            NbtIo.writeCompressed(root, new FileOutputStream(levelDat));
         }
         catch (Exception ex)
         {

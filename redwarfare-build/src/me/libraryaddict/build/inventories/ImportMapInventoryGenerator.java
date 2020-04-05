@@ -175,9 +175,9 @@ public class ImportMapInventoryGenerator extends BasicInventory {
                         getPlayer().sendMessage(C.Red + "level.dat not found!");
                     }
 
-                    CompoundTag ***REMOVED*** = NbtIo.readCompressed(new FileInputStream(level));
+                    CompoundTag root = NbtIo.readCompressed(new FileInputStream(level));
 
-                    CompoundTag data = ***REMOVED***.getCompound("Data");
+                    CompoundTag data = root.getCompound("Data");
 
                     if (type != null) {
                         data.putString("generatorName", type);

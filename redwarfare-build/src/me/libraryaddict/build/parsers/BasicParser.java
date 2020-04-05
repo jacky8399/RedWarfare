@@ -204,14 +204,14 @@ public class BasicParser {
         try {
             File dataFile = new File(_folder, "level.dat");
 
-            CompoundTag ***REMOVED*** = NbtIo.readCompressed(new FileInputStream(dataFile));
+            CompoundTag root = NbtIo.readCompressed(new FileInputStream(dataFile));
 
-            CompoundTag data = ***REMOVED***.getCompound("Data");
+            CompoundTag data = root.getCompound("Data");
             data.putString("generatorName", "flat");
             data.putString("generatorOptions", "3;minecraft:air;1;minecraft:air");
             data.putInt("GameType", 0);
 
-            NbtIo.writeCompressed(***REMOVED***, new FileOutputStream(dataFile));
+            NbtIo.writeCompressed(root, new FileOutputStream(dataFile));
         }
         catch (Exception ex) {
             UtilError.handle(ex);

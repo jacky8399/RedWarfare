@@ -79,7 +79,7 @@ public class CommandExport extends SimpleCommand {
                         fileManager.copyFileToLocal();
                     }
 
-                    fileManager.exportMapToSite(worldInfo.getData().getFileLoc(), "***REMOVED***", "sage", "debian", remoteFile);
+                    fileManager.exportMapToSite(worldInfo.getData().getFileLoc(), "localhost", "sage", "debian", remoteFile);
                 }
                 catch (Exception e) {
                     UtilPlayer.sendMessage(player, UtilError.format("Error while exporting map!"));
@@ -88,7 +88,7 @@ public class CommandExport extends SimpleCommand {
                 }
 
                 UtilPlayer.sendMessage(player,
-                        C.Blue + "Download your map at http://***REMOVED***.com/download/" + name);
+                        C.Blue + "Download your map at http://martoph.com/download/" + name);
                 UtilPlayer.sendMessage(player, C.Blue + "The link will expire in 60 minutes");
             }
         }.runTaskAsynchronously(_worldManager.getPlugin());

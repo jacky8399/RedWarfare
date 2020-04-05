@@ -52,7 +52,7 @@ public class RedisManager {
     }
 
     private String _password = "";
-    private String _url = "***REMOVED***";
+    private String _url = "REDISURL";
 
     public RedisManager() {
         this(4);
