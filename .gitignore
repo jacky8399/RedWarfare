@@ -17,7 +17,7 @@ target/
 out/
 bin/
 
-bfg-1.13.0.jar
+redwarfare-global/src/me/libraryaddict/mysql/bfg-1.13.0.jar
 
 redwarfare-arcade/target/
 redwarfare-build/target/
