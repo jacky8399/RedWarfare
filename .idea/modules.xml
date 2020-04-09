@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/redwarfare-arcade/redwarfare-arcade.iml" filepath="$PROJECT_DIR$/redwarfare-arcade/redwarfare-arcade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redwarfare-build/redwarfare-build.iml" filepath="$PROJECT_DIR$/redwarfare-build/redwarfare-build.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redwarfare-bungee/redwarfare-bungee.iml" filepath="$PROJECT_DIR$/redwarfare-bungee/redwarfare-bungee.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redwarfare-core/redwarfare-core.iml" filepath="$PROJECT_DIR$/redwarfare-core/redwarfare-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redwarfare-global/redwarfare-global.iml" filepath="$PROJECT_DIR$/redwarfare-global/redwarfare-global.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redwarfare-hub/redwarfare-hub.iml" filepath="$PROJECT_DIR$/redwarfare-hub/redwarfare-hub.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redwarfare-parent.iml" filepath="$PROJECT_DIR$/redwarfare-parent.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,5 @@
+name: Arcade
+main: me.libraryaddict.arcade.Arcade
+version: §7Running build §l238§7, built on §l09/04/2020 13:53
+depend: [ProtocolLib, LibsDisguises]
+api-version: '1.15'

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="redwarfare-bungee" />
+        <module name="redwarfare-hub" />
+        <module name="redwarfare-build" />
+        <module name="redwarfare-arcade" />
+        <module name="redwarfare-global" />
+        <module name="redwarfare-core" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="redwarfare-arcade" target="1.8" />
+      <module name="redwarfare-build" target="1.8" />
+      <module name="redwarfare-bungee" target="1.8" />
+      <module name="redwarfare-core" target="1.8" />
+      <module name="redwarfare-gearwars" target="1.8" />
+      <module name="redwarfare-global" target="1.8" />
+      <module name="redwarfare-hub" target="1.8" />
+      <module name="redwarfare-parent" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
