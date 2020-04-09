@@ -1,10 +1,5 @@
 package me.libraryaddict.arcade.commands;
 
-import java.util.Collection;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import me.libraryaddict.arcade.managers.ArcadeManager;
 import me.libraryaddict.arcade.managers.GameState;
 import me.libraryaddict.arcade.managers.LobbyManager;
@@ -14,6 +9,10 @@ import me.libraryaddict.core.command.SimpleCommand;
 import me.libraryaddict.core.rank.Rank;
 import me.libraryaddict.core.ranks.PlayerRank;
 import me.libraryaddict.core.utils.UtilString;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
+import java.util.Collection;
 
 public class CommandGame extends SimpleCommand
 {
@@ -29,7 +28,7 @@ public class CommandGame extends SimpleCommand
     @Override
     public void onTab(Player player, PlayerRank rank, String[] args, String token, Collection<String> completions)
     {
-        if (args.length == 0)
+        if (args.length == 1)
         {
             for (String s : new String[]
                 {
@@ -42,7 +41,7 @@ public class CommandGame extends SimpleCommand
                 }
             }
         }
-        else if (args.length == 1)
+        else if (args.length == 2)
         {
             if (args[0].equalsIgnoreCase("set"))
             {

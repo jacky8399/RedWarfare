@@ -344,7 +344,7 @@ public class CustomExplosion extends Explosion {
         			this.cancel();
         		}
 
-        		UtilParticle.playParticle(ParticleType.FLAME, new Location(_world.getWorld(), posX, posY, posZ));
+        		UtilParticle.playParticle(Particle.FLAME, new Location(_world.getWorld(), posX, posY, posZ));
         	}
         }.runTaskTimer(Bukkit.getPluginManager().getPlugins()[0], 0, 5);*/
         // Explode

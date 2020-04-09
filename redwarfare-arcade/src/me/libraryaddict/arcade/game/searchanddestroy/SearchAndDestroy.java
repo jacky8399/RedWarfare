@@ -22,12 +22,8 @@ import me.libraryaddict.core.scoreboard.FakeTeam;
 import me.libraryaddict.core.time.TimeEvent;
 import me.libraryaddict.core.time.TimeType;
 import me.libraryaddict.core.utils.*;
-import me.libraryaddict.core.utils.UtilParticle.ParticleType;
 import me.libraryaddict.core.utils.UtilParticle.ViewDist;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
@@ -313,7 +309,7 @@ public class SearchAndDestroy extends TeamGame
         Location loc = teamBomb.getBomb().getLocation();
 
         loc.getWorld().playSound(loc, Sound.ENTITY_GENERIC_EXPLODE, 10000, 0);
-        UtilParticle.playParticle(ParticleType.HUGE_EXPLOSION, loc, ViewDist.LONGER);
+        UtilParticle.playParticle(Particle.EXPLOSION_HUGE, loc, ViewDist.LONGER);
 
         Iterator<TeamBomb> itel = getBombs().iterator();
 

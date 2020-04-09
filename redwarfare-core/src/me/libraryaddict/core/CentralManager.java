@@ -6,9 +6,9 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.injector.PacketConstructor;
 import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
-import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
 import me.libraryaddict.core.antiafk.AntiAfkManager;
 import me.libraryaddict.core.bans.BanManager;
 import me.libraryaddict.core.censor.CensorManager;
@@ -272,9 +272,9 @@ public abstract class CentralManager extends MiniPlugin {
                             StructureModifier<Integer> pInts = packet.getIntegers();
                             StructureModifier<Integer> ints = toSend.getIntegers();
 
+                            ints.write(0, pInts.read(0));
                             ints.write(1, pInts.read(1));
                             ints.write(2, pInts.read(2));
-                            ints.write(3, pInts.read(3));
 
                             PacketContainer[] move = new PacketContainer[4];
 
@@ -408,12 +408,6 @@ public abstract class CentralManager extends MiniPlugin {
         doubles.write(0, location.getX());
         doubles.write(1, location.getY());
         doubles.write(2, location.getZ());
-
-        WrappedDataWatcher wrapped = new WrappedDataWatcher();
-
-        wrapped.setObject(MetaIndex.ENTITY_META.getIndex(), Registry.get(Byte.class), (byte) 32);
-
-        spawnPig.getDataWatcherModifier().write(0, wrapped);
 
         Integer[] fakeIds;
 
@@ -668,24 +662,29 @@ public abstract class CentralManager extends MiniPlugin {
     }
 
     private PacketContainer[] writeDoubles(Integer[] ids, PacketContainer packet) {
+        int currentId = 0;
         int i = 0;
-        PacketContainer[] packets = new PacketContainer[4];
-
+        PacketContainer[] packets = new PacketContainer[8];
         for (int x = -1; x <= 1; x += 2) {
             for (int z = -1; z <= 1; z += 2) {
                 PacketContainer toSend = packet.shallowClone();
 
                 StructureModifier<Double> doubles = toSend.getDoubles();
+                doubles.write(0, doubles.read(0) + x * 0.15D);
+                doubles.write(2, doubles.read(2) + z * 0.15D);
 
-                doubles.write(0, doubles.read(0) + (x * 0.15));
-                doubles.write(2, doubles.read(2) + (z * 0.15));
+                toSend.getIntegers().write(0, ids[currentId]);
 
-                toSend.getIntegers().write(0, ids[i]);
+                WrappedDataWatcher wrapped = new WrappedDataWatcher();
+
+                wrapped.setObject(MetaIndex.ENTITY_META.getIndex(), WrappedDataWatcher.Registry.get(Byte.class), (byte) 32);
+                PacketConstructor packetConstructor = ProtocolLibrary.getProtocolManager().createPacketConstructor(PacketType.Play.Server.ENTITY_METADATA, 0, new WrappedDataWatcher(), Boolean.valueOf(true));
+                PacketContainer invisiblePacket = packetConstructor.createPacket(ids[currentId], wrapped, Boolean.TRUE);
 
                 packets[i++] = toSend;
+                packets[i++] = invisiblePacket;
             }
         }
-
         return packets;
     }
 

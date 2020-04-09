@@ -1,16 +1,15 @@
 package me.libraryaddict.core.cosmetics.types;
 
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.inventory.ItemStack;
-
 import me.libraryaddict.core.cosmetics.Cosmetic;
 import me.libraryaddict.core.time.TimeEvent;
 import me.libraryaddict.core.time.TimeType;
 import me.libraryaddict.core.utils.UtilParticle;
-import me.libraryaddict.core.utils.UtilParticle.ParticleType;
+import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.inventory.ItemStack;
 
 public class CosmeticCloud extends Cosmetic
 {
@@ -46,8 +45,8 @@ public class CosmeticCloud extends Cosmetic
 
         for (Player player : getPlayers())
         {
-            UtilParticle.playParticle(ParticleType.CLOUD, player.getLocation().add(0, 2.8, 0), 0.7, 0.2, 0.7, 10);
-            UtilParticle.playParticle(ParticleType.DRIP_WATER, player.getLocation().add(0, 2.8, 0), 0.6, 0.2, 0.6, 1);
+            UtilParticle.playParticle(Particle.CLOUD, player.getLocation().add(0, 2.8, 0), 0.7, 0.2, 0.7, 10);
+            UtilParticle.playParticle(Particle.DRIP_WATER, player.getLocation().add(0, 2.8, 0), 0.6, 0.2, 0.6, 1);
 
             if (_tick % 15 != 0)
                 continue;

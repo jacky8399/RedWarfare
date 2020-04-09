@@ -11,10 +11,10 @@ import me.libraryaddict.core.time.TimeEvent;
 import me.libraryaddict.core.time.TimeType;
 import me.libraryaddict.core.utils.UtilInv;
 import me.libraryaddict.core.utils.UtilParticle;
-import me.libraryaddict.core.utils.UtilParticle.ParticleType;
 import me.libraryaddict.core.utils.UtilTime;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -164,7 +164,7 @@ public class DemolitionsAbility extends Ability
 
             mine.setTriggered();
 
-            UtilParticle.playParticle(ParticleType.LARGE_SMOKE, mine.getLocation().add(0, -.5, 0), 0.3F, 0.0F, 0.3F, 3);
+            UtilParticle.playParticle(Particle.SMOKE_LARGE, mine.getLocation().add(0, -.5, 0), 0.3F, 0.0F, 0.3F, 3);
 
             mine.getLocation().getWorld().playSound(mine.getLocation(), Sound.ENTITY_CREEPER_HURT, 1, 0);
             mine.getLocation().getWorld().playSound(mine.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 0);
@@ -278,7 +278,7 @@ public class DemolitionsAbility extends Ability
 
                 mine.setArmed();
 
-                UtilParticle.playParticle(ParticleType.CRIT, mine.getLocation().add(0, 0.4, 0), 3);
+                UtilParticle.playParticle(Particle.CRIT, mine.getLocation().add(0, 0.4, 0), 3);
 
                 mine.getLocation().getWorld().playSound(mine.getLocation(), Sound.BLOCK_WOODEN_PRESSURE_PLATE_CLICK_ON, 1, 0.1F);
 

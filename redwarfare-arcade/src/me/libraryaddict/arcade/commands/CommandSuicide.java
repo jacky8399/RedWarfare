@@ -1,10 +1,5 @@
 package me.libraryaddict.arcade.commands;
 
-import java.util.Collection;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import me.libraryaddict.arcade.managers.GameManager;
 import me.libraryaddict.core.C;
 import me.libraryaddict.core.command.SimpleCommand;
@@ -13,6 +8,10 @@ import me.libraryaddict.core.damage.DamageManager;
 import me.libraryaddict.core.rank.Rank;
 import me.libraryaddict.core.ranks.PlayerRank;
 import me.libraryaddict.core.utils.UtilString;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
+import java.util.Collection;
 
 public class CommandSuicide extends SimpleCommand
 {
@@ -36,7 +35,7 @@ public class CommandSuicide extends SimpleCommand
         if (!rank.hasRank(Rank.ADMIN))
             return;
 
-        if (args.length > 0)
+        if (args.length > 1)
             return;
 
         for (Player p : Bukkit.getOnlinePlayers())

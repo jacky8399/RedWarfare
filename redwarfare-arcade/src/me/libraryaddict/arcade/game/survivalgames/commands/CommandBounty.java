@@ -1,10 +1,5 @@
 package me.libraryaddict.arcade.game.survivalgames.commands;
 
-import java.util.Collection;
-
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-
 import me.libraryaddict.arcade.game.survivalgames.BountyManager;
 import me.libraryaddict.arcade.game.survivalgames.SurvivalGames;
 import me.libraryaddict.core.C;
@@ -14,6 +9,10 @@ import me.libraryaddict.core.player.types.Currency.CurrencyType;
 import me.libraryaddict.core.rank.Rank;
 import me.libraryaddict.core.ranks.PlayerRank;
 import me.libraryaddict.core.utils.UtilNumber;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+
+import java.util.Collection;
 
 public class CommandBounty extends SimpleCommand
 {
@@ -29,7 +28,7 @@ public class CommandBounty extends SimpleCommand
     @Override
     public void onTab(Player player, PlayerRank rank, String[] args, String token, Collection<String> completions)
     {
-        if (args.length == 0)
+        if (args.length == 1)
         {
             completions.addAll(getPlayers(token));
         }

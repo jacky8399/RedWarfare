@@ -1,16 +1,10 @@
 package me.libraryaddict.core.utils;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import javax.imageio.ImageIO;
-
+import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import org.bukkit.ChatColor;
 
-import me.libraryaddict.core.C;
+import java.util.ArrayList;
+import java.util.Optional;
 
 public class UtilText {
     public static ArrayList<String> splitLine(String string, LineFormat lineFormat) {
@@ -124,5 +118,9 @@ public class UtilText {
         }
 
         return string;
+    }
+
+    public static Optional<Object> getCustomNameComponent(String text) {
+        return Optional.of(WrappedChatComponent.fromChatMessage(text)[0].getHandle());
     }
 }

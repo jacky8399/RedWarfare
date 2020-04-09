@@ -1,13 +1,9 @@
 package me.libraryaddict.redis;
 
-import java.io.IOException;
-
 import me.libraryaddict.core.utils.UtilError;
-import redis.clients.jedis.Jedis;
-import redis.clients.jedis.JedisPool;
-import redis.clients.jedis.JedisPoolConfig;
-import redis.clients.jedis.JedisPubSub;
-import redis.clients.jedis.Protocol;
+import redis.clients.jedis.*;
+
+import java.io.IOException;
 
 public class RedisManager {
     private static JedisPool _redis;
@@ -52,7 +48,7 @@ public class RedisManager {
     }
 
     private String _password = "";
-    private String _url = "localhost";
+    private String _url = "";
 
     public RedisManager() {
         this(4);

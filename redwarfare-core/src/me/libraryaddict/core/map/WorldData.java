@@ -4,11 +4,7 @@ import me.libraryaddict.core.utils.UtilFile;
 import me.libraryaddict.core.utils.UtilLoc;
 import me.libraryaddict.core.utils.UtilMath;
 import me.libraryaddict.core.utils.UtilParticle;
-import me.libraryaddict.core.utils.UtilParticle.ParticleType;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -315,7 +311,7 @@ public class WorldData {
                     blockLoc.getBlock().setType(Material.GLASS);
 
                     if (UtilMath.r(6) == 0) {
-                        UtilParticle.playParticle(ParticleType.BARRIER, blockLoc.add(0.5, 0, 0.5));
+                        UtilParticle.playParticle(Particle.BARRIER, blockLoc.add(0.5, 0, 0.5));
                     }
                 }
             }

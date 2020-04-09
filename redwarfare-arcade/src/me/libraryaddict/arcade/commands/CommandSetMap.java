@@ -1,11 +1,5 @@
 package me.libraryaddict.arcade.commands;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-
-import org.bukkit.entity.Player;
-
 import me.libraryaddict.arcade.managers.ArcadeManager;
 import me.libraryaddict.arcade.managers.GameState;
 import me.libraryaddict.arcade.map.MapInfo;
@@ -16,6 +10,11 @@ import me.libraryaddict.core.rank.Rank;
 import me.libraryaddict.core.ranks.PlayerRank;
 import me.libraryaddict.core.utils.UtilFile;
 import me.libraryaddict.core.utils.UtilString;
+import org.bukkit.entity.Player;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class CommandSetMap extends SimpleCommand
 {
@@ -44,7 +43,7 @@ public class CommandSetMap extends SimpleCommand
     @Override
     public void onTab(Player player, PlayerRank rank, String[] args, String token, Collection<String> completions)
     {
-        if (args.length > 0)
+        if (args.length > 1)
             return;
 
         for (File file : UtilFile.getMaps(_arcadeManager.getGame().getGameType()))

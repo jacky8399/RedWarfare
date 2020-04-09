@@ -35,7 +35,7 @@ public class CommandGiveItem extends SimpleCommand
     @Override
     public void onTab(Player player, PlayerRank rank, String[] args, String token, Collection<String> completions)
     {
-        if (rank.hasRank(Rank.OWNER) && args.length == 0)
+        if (rank.hasRank(Rank.OWNER) && args.length == 1)
         {
             completions.addAll(getPlayers(token));
 
@@ -45,7 +45,7 @@ public class CommandGiveItem extends SimpleCommand
             }
         }
 
-        if (args.length > 1)
+        if (args.length > 2)
             return;
 
         ArrayList<String> items = UtilItem.getCompletions(token, false);

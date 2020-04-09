@@ -2,9 +2,11 @@ package me.libraryaddict.core.scoreboard;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.WrappedChatComponent;
 import me.libraryaddict.core.CentralManager;
 import me.libraryaddict.core.utils.UtilError;
 import me.libraryaddict.core.utils.UtilPlayer;
+import net.minecraft.server.v1_15_R1.ChatComponentText;
 import net.minecraft.server.v1_15_R1.ScoreboardTeam;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -222,10 +224,10 @@ public class FakeTeam
         _options.put(option, optionStatus);
 
         if (option == Option.NAME_TAG_VISIBILITY)
-            _teamPacket.getStrings().write(4, optionStatus.name());
+            _teamPacket.getStrings().write(1, optionStatus.name());
 
         if (option == Option.COLLISION_RULE)
-            _teamPacket.getStrings().write(5, optionStatus.name());
+            _teamPacket.getStrings().write(2, optionStatus.name());
 
         _team.setOption(option, optionStatus);
     }
@@ -244,14 +246,14 @@ public class FakeTeam
 
         try
         {
-            _setPrefix.set(_nmsTeam, prefix);
+            _setPrefix.set(_nmsTeam, new ChatComponentText(prefix));
         }
         catch (Exception ex)
         {
             UtilError.handle(ex);
         }
 
-        _teamPacket.getStrings().write(2, prefix);
+        _teamPacket.getChatComponents().write(1, WrappedChatComponent.fromText(prefix));
 
         for (Player player : _fakeScoreboard.getPlayers())
         {
@@ -301,14 +303,14 @@ public class FakeTeam
 
         try
         {
-            _setSuffix.set(_nmsTeam, suffix);
+            _setSuffix.set(_nmsTeam, new ChatComponentText(suffix));
         }
         catch (Exception ex)
         {
             UtilError.handle(ex);
         }
 
-        _teamPacket.getStrings().write(3, suffix);
+        _teamPacket.getChatComponents().write(2, WrappedChatComponent.fromText(suffix));
 
         for (Player player : _fakeScoreboard.getPlayers())
         {

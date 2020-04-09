@@ -5,9 +5,6 @@ import me.libraryaddict.core.C;
 import me.libraryaddict.core.command.SimpleCommand;
 import me.libraryaddict.core.rank.Rank;
 import me.libraryaddict.core.ranks.PlayerRank;
-import me.libraryaddict.core.utils.UtilMath;
-import org.apache.commons.lang.StringUtils;
-import org.bukkit.command.Command;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -27,7 +24,7 @@ public class CommandCredits extends SimpleCommand {
     @Override
     public void onTab(Player player, PlayerRank rank, String[] args, String token, Collection<String> completions) {
 
-        if (args.length == 0) {
+        if (args.length == 1) {
             List<String> strings = new ArrayList<>(Arrays.asList("setwin", "setloss", "setkill"));
 
             for (String string : strings) {

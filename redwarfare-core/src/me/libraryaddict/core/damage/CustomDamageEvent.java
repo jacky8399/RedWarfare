@@ -1,21 +1,16 @@
 package me.libraryaddict.core.damage;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import me.libraryaddict.core.Pair;
+import me.libraryaddict.core.condition.ConditionManager;
+import me.libraryaddict.core.utils.UtilEnt;
+import me.libraryaddict.core.utils.UtilError;
+import me.libraryaddict.core.utils.UtilMath;
+import me.libraryaddict.core.utils.UtilParticle;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.AnimalTamer;
-import org.bukkit.entity.Arrow;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.entity.Tameable;
+import org.bukkit.entity.*;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -23,13 +18,11 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.ProjectileSource;
 import org.bukkit.util.Vector;
 
-import me.libraryaddict.core.Pair;
-import me.libraryaddict.core.condition.ConditionManager;
-import me.libraryaddict.core.utils.UtilEnt;
-import me.libraryaddict.core.utils.UtilError;
-import me.libraryaddict.core.utils.UtilMath;
-import me.libraryaddict.core.utils.UtilParticle;
-import me.libraryaddict.core.utils.UtilParticle.ParticleType;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class CustomDamageEvent extends Event implements Cancellable
 {
@@ -308,7 +301,7 @@ public class CustomDamageEvent extends Event implements Cancellable
                                 }
 
                                 for (int i = 0; i < 12; i++)
-                                    UtilParticle.playParticle(ParticleType.MAGIC_CRIT, loc, UtilMath.rr(-1, 1),
+                                    UtilParticle.playParticle(Particle.CRIT_MAGIC, loc, UtilMath.rr(-1, 1),
                                             UtilMath.rr(-1, 1), UtilMath.rr(-1, 1));
                             }
                         });

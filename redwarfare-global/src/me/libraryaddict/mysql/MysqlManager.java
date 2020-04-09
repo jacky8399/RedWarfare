@@ -1,13 +1,12 @@
 package me.libraryaddict.mysql;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import me.libraryaddict.KeyMappings;
+import me.libraryaddict.core.utils.UtilError;
+
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-
-import me.libraryaddict.KeyMappings;
-import me.libraryaddict.core.utils.UtilError;
 
 public class MysqlManager {
     private static ComboPooledDataSource _mysqlPool;

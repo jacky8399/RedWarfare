@@ -1,29 +1,23 @@
 package me.libraryaddict.core.hologram;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.UUID;
-
-import org.bukkit.Location;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
-
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.reflect.StructureModifier;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher;
 import com.comphenix.protocol.wrappers.WrappedDataWatcher.Registry;
-
 import me.libraryaddict.core.hologram.HologramInteract.InteractType;
 import me.libraryaddict.core.utils.UtilEnt;
 import me.libraryaddict.core.utils.UtilPlayer;
+import me.libraryaddict.core.utils.UtilText;
+import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MetaIndex;
+import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
+
+import java.util.*;
 
 public class Hologram
 {
@@ -97,23 +91,23 @@ public class Hologram
         return this;
     }
 
-    private PacketContainer constructMetaPacket(int entityId, String lineOfText)
+    private PacketContainer constructMetaPacket(int entityId, String lineOfText, boolean display)
     {
         PacketContainer meta = new PacketContainer(PacketType.Play.Server.ENTITY_METADATA);
         meta.getIntegers().write(0, entityId);
-        meta.getWatchableCollectionModifier().write(0, getWatcher(lineOfText, true).getWatchableObjects());
+        meta.getWatchableCollectionModifier().write(0, getWatcher(lineOfText, display).getWatchableObjects());
 
         return meta;
     }
 
-    private PacketContainer constructSpawnPacket(int textRow, String lineOfText, boolean display)
+    private PacketContainer constructSpawnPacket(int textRow)
     {
         PacketContainer packet = new PacketContainer(PacketType.Play.Server.SPAWN_ENTITY_LIVING);
 
         StructureModifier<Integer> ints = packet.getIntegers();
 
         ints.write(0, _entityIds.get(textRow));
-        ints.write(1, (int) EntityType.ARMOR_STAND.getTypeId());
+        ints.write(1, DisguiseType.ARMOR_STAND.getTypeId());
 
         StructureModifier<Double> doubles = packet.getDoubles();
 
@@ -123,7 +117,7 @@ public class Hologram
 
         packet.getModifier().write(1, UUID.randomUUID());
 
-        packet.getDataWatcherModifier().write(0, getWatcher(lineOfText, display));
+        //packet.getDataWatcherModifier().write(0, getWatcher(lineOfText, display));
 
         return packet;
     }
@@ -236,7 +230,7 @@ public class Hologram
         if (visible)
         {
             watcher.setObject(new WrappedDataWatcher.WrappedDataWatcherObject(MetaIndex.ENTITY_CUSTOM_NAME.getIndex(),
-                    Registry.get(String.class)), lineOfText); // CustomName
+                    Registry.getChatComponentSerializer(true)), UtilText.getCustomNameComponent(lineOfText)); // CustomName
             watcher.setObject(new WrappedDataWatcher.WrappedDataWatcherObject(MetaIndex.ENTITY_CUSTOM_NAME_VISIBLE.getIndex(),
                     Registry.get(Boolean.class)), visible); // CustomName-Visibility
         }
@@ -323,8 +317,8 @@ public class Hologram
             if (line == null)
                 continue;
 
-            _spawnPackets.add(constructSpawnPacket(index, _hologramText[index], false));
-            _spawnMetaPackets.add(constructMetaPacket(_entityIds.get(index), _hologramText[index]));
+            _spawnPackets.add(constructSpawnPacket(index));
+            _spawnMetaPackets.add(constructMetaPacket(_entityIds.get(index), _hologramText[index], true));
         }
     }
 
@@ -599,11 +593,11 @@ public class Hologram
 
                 if (index >= oldText.length || oldText[index] == null)
                 {
-                    packets.add(constructSpawnPacket(index, newText[index], true));
+                    packets.add(constructSpawnPacket(index));
                 }
                 else if (!newText[index].equals(oldText[index]))
                 {
-                    packets.add(constructMetaPacket(_entityIds.get(index), newText[index]));
+                    packets.add(constructMetaPacket(_entityIds.get(index), newText[index], true));
                 }
             }
 

@@ -1,15 +1,14 @@
 package me.libraryaddict.arcade.game.searchanddestroy.abilities;
 
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-
 import me.libraryaddict.arcade.kits.Ability;
 import me.libraryaddict.core.damage.CustomDamageEvent;
 import me.libraryaddict.core.damage.DamageMod;
 import me.libraryaddict.core.time.TimeEvent;
 import me.libraryaddict.core.time.TimeType;
 import me.libraryaddict.core.utils.UtilParticle;
-import me.libraryaddict.core.utils.UtilParticle.ParticleType;
+import org.bukkit.Particle;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 
 public class BerserkerAbility extends Ability
 {
@@ -52,7 +51,7 @@ public class BerserkerAbility extends Ability
             if (kills <= 0)
                 continue;
 
-            UtilParticle.playParticle(ParticleType.RED_DUST, player.getLocation().add(0, 1, 0), 0.4, 1, 0.4, kills * 2);
+            UtilParticle.playParticle(Particle.REDSTONE, player.getLocation().add(0, 1, 0), 0.4, 1, 0.4, kills * 2);
         }
     }
 

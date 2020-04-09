@@ -1,31 +1,9 @@
 package me.libraryaddict.arcade.game.searchanddestroy.abilities;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.UUID;
-
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Result;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.scoreboard.DisplaySlot;
-
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.injector.PacketConstructor;
-
 import me.libraryaddict.arcade.events.DeathEvent;
 import me.libraryaddict.arcade.events.GameStateEvent;
 import me.libraryaddict.arcade.game.Game;
@@ -44,12 +22,23 @@ import me.libraryaddict.core.scoreboard.ScoreboardManager;
 import me.libraryaddict.core.stats.Stats;
 import me.libraryaddict.core.time.TimeEvent;
 import me.libraryaddict.core.time.TimeType;
-import me.libraryaddict.core.utils.UtilEnt;
-import me.libraryaddict.core.utils.UtilInv;
-import me.libraryaddict.core.utils.UtilLoc;
-import me.libraryaddict.core.utils.UtilParticle;
-import me.libraryaddict.core.utils.UtilParticle.ParticleType;
-import me.libraryaddict.core.utils.UtilPlayer;
+import me.libraryaddict.core.utils.*;
+import org.bukkit.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Event.Result;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.block.Action;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scoreboard.DisplaySlot;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.UUID;
 
 public class MedicAbility extends Ability {
     private PacketConstructor _constructor = ProtocolLibrary.getProtocolManager()
@@ -171,7 +160,7 @@ public class MedicAbility extends Ability {
             }
 
             if (healsLeft >= 50) {
-                UtilParticle.playParticle(ParticleType.BLACK_HEART, clicked.getEyeLocation().add(0, .4, 0));
+                UtilParticle.playParticle(Particle.DAMAGE_INDICATOR, clicked.getEyeLocation().add(0, .4, 0));
 
                 PotionEffect potion = UtilEnt.getPotion(clicked, PotionEffectType.REGENERATION);
 
@@ -199,7 +188,7 @@ public class MedicAbility extends Ability {
             UtilEnt.heal(clicked, toHeal);
 
             if (toHeal >= 1) {
-                UtilParticle.playParticle(ParticleType.HEART, clicked.getEyeLocation().add(0, .4, 0));
+                UtilParticle.playParticle(Particle.HEART, clicked.getEyeLocation().add(0, .4, 0));
 
                 if (clicked instanceof Player) {
                     heal((Player) clicked);

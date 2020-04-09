@@ -9,7 +9,6 @@ import me.libraryaddict.core.time.TimeEvent;
 import me.libraryaddict.core.time.TimeType;
 import me.libraryaddict.core.utils.UtilLoc;
 import me.libraryaddict.core.utils.UtilParticle;
-import me.libraryaddict.core.utils.UtilParticle.ParticleType;
 import me.libraryaddict.core.utils.UtilShapes;
 import me.libraryaddict.core.utils.UtilTime;
 import me.libraryaddict.disguise.disguisetypes.MetaIndex;
@@ -17,6 +16,7 @@ import net.minecraft.server.v1_15_R1.Vector3f;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -84,7 +84,7 @@ public class CosmeticBodyguards extends Cosmetic
 
             entry.getValue().stream().forEach((entity) -> {
 
-                UtilParticle.playParticle(ParticleType.CLOUD, entity.getLocation(), 0.3, 0.8, 0.3, 10);
+                UtilParticle.playParticle(Particle.CLOUD, entity.getLocation(), 0.3, 0.8, 0.3, 10);
 
                 entity.stop();
 
@@ -136,7 +136,7 @@ public class CosmeticBodyguards extends Cosmetic
 
                 guard.setMetadata(MetaIndex.ARMORSTAND_META, (byte) 28);
 
-                UtilParticle.playParticle(ParticleType.CLOUD, guard.getLocation(), 0.3, 0.8, 0.3, 10);
+                UtilParticle.playParticle(Particle.CLOUD, guard.getLocation(), 0.3, 0.8, 0.3, 10);
 
                 guard.start();
 

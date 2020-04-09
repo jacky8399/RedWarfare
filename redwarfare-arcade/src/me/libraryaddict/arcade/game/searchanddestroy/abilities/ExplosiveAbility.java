@@ -12,7 +12,6 @@ import me.libraryaddict.core.recharge.Recharge;
 import me.libraryaddict.core.time.TimeEvent;
 import me.libraryaddict.core.time.TimeType;
 import me.libraryaddict.core.utils.*;
-import me.libraryaddict.core.utils.UtilParticle.ParticleType;
 import me.libraryaddict.core.utils.UtilParticle.ViewDist;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
@@ -21,6 +20,7 @@ import net.minecraft.server.v1_15_R1.EntityArrow;
 import net.minecraft.server.v1_15_R1.EntityTippedArrow;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftEgg;
 import org.bukkit.entity.*;
 import org.bukkit.event.Event.Result;
@@ -180,7 +180,7 @@ public class ExplosiveAbility extends Ability
             if (!UtilTime.elasped(entry.getKey(), 3000))
             {
                 if (_smokeTick % 5 == 0)
-                    UtilParticle.playParticle(ParticleType.SMOKE, entity.getLocation().add(0, 0.5, 0));
+                    UtilParticle.playParticle(Particle.SMOKE_NORMAL, entity.getLocation().add(0, 0.5, 0));
 
                 continue;
             }
@@ -294,7 +294,7 @@ public class ExplosiveAbility extends Ability
                 continue;
             }
 
-            UtilParticle.playParticle(ParticleType.LARGE_CLOUD, egg.getLocation(), ViewDist.LONG);
+            UtilParticle.playParticle(Particle.EXPLOSION_LARGE, egg.getLocation(), ViewDist.LONG);
         }
     }
 

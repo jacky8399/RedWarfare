@@ -10,6 +10,17 @@
 		<relativePath>pom.xml</relativePath>
 	</parent>
 
+	<properties>
+		<dir>../out</dir>
+		<redispass>REDISPASS</redispass>
+		<redisurl>REDISURL</redisurl>
+		<sqlhost>SQLHOST</sqlhost>
+		<sqlport>SQLPORT</sqlport>
+		<sqldb>SQLDB</sqldb>
+		<sqluser>SQLUSER</sqluser>
+		<sqlpass>SQLPASS</sqlpass>
+	</properties>
+
 	<artifactId>redwarfare-plugin</artifactId>
 	<packaging>pom</packaging>
 
@@ -28,7 +39,7 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
 				<configuration>
-					<outputDirectory>../out</outputDirectory>
+					<outputDirectory>${dir}</outputDirectory>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -40,6 +51,35 @@
 						<goals>
 							<goal>shade</goal>
 						</goals>
+						<configuration>
+							<filters>
+								<filter>
+									<artifact>${project.groupId}:redwarfare-global</artifact>
+									<excludes>
+										<exclude>me/libraryaddict/redis/RedisManager.class</exclude>
+										<exclude>me/libraryaddict/mysql/MysqlManager.class</exclude>
+										<exclude>me/libraryaddict/redis/RedisManager$1.class</exclude>
+										<exclude>me/libraryaddict/mysql/MysqlManager$1.class</exclude>
+									</excludes>
+								</filter>
+							</filters>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>templating-maven-plugin</artifactId>
+				<version>1.0.0</version>
+				<executions>
+					<execution>
+						<id>filter-src</id>
+						<goals>
+							<goal>filter-sources</goal><!-- add this if you filter main sources -->
+						</goals>
+						<configuration>
+							<sourceDirectory>../redwarfare-global/java-templates/</sourceDirectory>
+						</configuration>
 					</execution>
 				</executions>
 			</plugin>

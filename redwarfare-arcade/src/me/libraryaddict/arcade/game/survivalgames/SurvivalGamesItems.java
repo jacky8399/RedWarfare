@@ -13,9 +13,9 @@ import me.libraryaddict.core.stats.Stats;
 import me.libraryaddict.core.time.TimeEvent;
 import me.libraryaddict.core.time.TimeType;
 import me.libraryaddict.core.utils.*;
-import me.libraryaddict.core.utils.UtilParticle.ParticleType;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -334,7 +334,7 @@ public class SurvivalGamesItems implements Listener
             return;
         }
 
-        UtilParticle.playParticle(ParticleType.CLOUD, player.getLocation().add(0, 0.1, 0), 0.1, 0, 0.1, 3);
+        UtilParticle.playParticle(Particle.CLOUD, player.getLocation().add(0, 0.1, 0), 0.1, 0, 0.1, 3);
     }
 
     @EventHandler
@@ -347,7 +347,7 @@ public class SurvivalGamesItems implements Listener
         {
             if (player.hasPotionEffect(PotionEffectType.BLINDNESS))
             {
-                UtilParticle.playParticle(ParticleType.SUSPEND, player.getLocation().add(0, 1, 0), 0.4, 1, 0.4, 9);
+                UtilParticle.playParticle(Particle.SUSPENDED, player.getLocation().add(0, 1, 0), 0.4, 1, 0.4, 9);
             }
         }
     }

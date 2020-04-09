@@ -17,12 +17,8 @@ import me.libraryaddict.core.stats.Stats;
 import me.libraryaddict.core.time.TimeEvent;
 import me.libraryaddict.core.time.TimeType;
 import me.libraryaddict.core.utils.*;
-import me.libraryaddict.core.utils.UtilParticle.ParticleType;
 import me.libraryaddict.core.utils.UtilParticle.ViewDist;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_15_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -99,10 +95,10 @@ public class SacrificialAbility extends Ability
 
         event.setCancelled(true);
 
-        UtilParticle.playParticle(ParticleType.BLOCK_CRACK.getParticle(Material.EMERALD_BLOCK, 0),
-                dmgd.getLocation().add(0, 1, 0), 0.4, 0.4, 0.4, 7);
-        UtilParticle.playParticle(ParticleType.BLOCK_CRACK.getParticle(Material.LAPIS_BLOCK, 0), sac.getLocation().add(0, 1, 0),
-                0.4, 0.4, 0.4, 7);
+        UtilParticle.playParticle(Particle.BLOCK_CRACK,
+                dmgd.getLocation().add(0, 1, 0), 0.4, 0.4, 0.4, 7, Material.EMERALD_BLOCK);
+        UtilParticle.playParticle(Particle.BLOCK_CRACK, sac.getLocation().add(0, 1, 0),
+                0.4, 0.4, 0.4, 7, Material.LAPIS_BLOCK);
 
         boolean longPart = Recharge.canUse(sac, "LongParticles");
 
@@ -127,7 +123,7 @@ public class SacrificialAbility extends Ability
                 if ((!longPart || b++ % 2 != 0) && UtilLoc.getDistance(loc1, loc) > 4 && UtilLoc.getDistance(loc2, loc) > 4)
                     continue;
 
-                UtilParticle.playParticle(ParticleType.RED_DUST, loc, ViewDist.SHORT);
+                UtilParticle.playParticle(Particle.REDSTONE, loc, ViewDist.SHORT);
             }
         }
 

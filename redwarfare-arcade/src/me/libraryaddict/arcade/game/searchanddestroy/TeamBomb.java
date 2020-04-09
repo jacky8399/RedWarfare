@@ -6,9 +6,9 @@ import me.libraryaddict.core.hologram.Hologram;
 import me.libraryaddict.core.recharge.Recharge;
 import me.libraryaddict.core.stats.Stats;
 import me.libraryaddict.core.utils.*;
-import me.libraryaddict.core.utils.UtilParticle.ParticleType;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
@@ -375,7 +375,7 @@ public class TeamBomb
 
         Location loc = (isArmed() ? getBomb().getLocation() : getBlock().getLocation().add(0.5, 0, 0.5)).add(0, 1, 0);
 
-        UtilParticle.playParticle(ParticleType.LARGE_SMOKE, loc);
+        UtilParticle.playParticle(Particle.SMOKE_LARGE, loc);
 
         if (UtilTime.elasped(_lastHiss, 500))
         {

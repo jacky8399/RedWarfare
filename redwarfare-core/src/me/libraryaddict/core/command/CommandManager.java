@@ -1,39 +1,28 @@
 package me.libraryaddict.core.command;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
-import com.comphenix.protocol.events.PacketAdapter;
-import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.injector.PacketConstructor;
-
 import me.libraryaddict.core.C;
-import me.libraryaddict.core.command.commands.CommandBungeeSettings;
-import me.libraryaddict.core.command.commands.CommandClearInventory;
-import me.libraryaddict.core.command.commands.CommandGamemode;
-import me.libraryaddict.core.command.commands.CommandGiveItem;
-import me.libraryaddict.core.command.commands.CommandKick;
-import me.libraryaddict.core.command.commands.CommandRefundMe;
-import me.libraryaddict.core.command.commands.CommandStuck;
-import me.libraryaddict.core.command.commands.CommandSudo;
-import me.libraryaddict.core.command.commands.CommandTeleport;
-import me.libraryaddict.core.command.commands.CommandTeleportAll;
-import me.libraryaddict.core.command.commands.CommandTeleportHere;
-import me.libraryaddict.core.command.commands.CommandTop;
+import me.libraryaddict.core.command.commands.*;
 import me.libraryaddict.core.plugin.MiniPlugin;
 import me.libraryaddict.core.ranks.PlayerRank;
 import me.libraryaddict.core.ranks.RankManager;
 import me.libraryaddict.core.utils.UtilError;
-import me.libraryaddict.core.utils.UtilPlayer;
+import org.bukkit.Bukkit;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandMap;
+import org.bukkit.command.CommandSender;
+import org.bukkit.command.PluginIdentifiableCommand;
+import org.bukkit.craftbukkit.v1_15_R1.command.CraftCommandMap;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.permissions.Permission;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.SimplePluginManager;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.lang.reflect.Field;
+import java.util.*;
 
 public class CommandManager extends MiniPlugin {
     private ArrayList<String> _bypassCommands = new ArrayList<String>();
@@ -44,33 +33,31 @@ public class CommandManager extends MiniPlugin {
     public CommandManager(JavaPlugin plugin) {
         super(plugin, "Command Manager");
 
-        _protocolManager = ProtocolLibrary.getProtocolManager();
 
-        _protocolManager.addPacketListener(new PacketAdapter(plugin, PacketType.Play.Client.TAB_COMPLETE) {
-            private PacketConstructor _constructor = _protocolManager.createPacketConstructor(PacketType.Play.Server.TAB_COMPLETE,
-                    (Object) new String[0]);
+        try {
+            SimplePluginManager spm = (SimplePluginManager)getPlugin().getServer().getPluginManager();
 
-            @Override
-            public void onPacketReceiving(PacketEvent event) {
-                try {
-                    event.setCancelled(true);
+            Field commandMapField = spm.getClass().getDeclaredField("commandMap");
+            commandMapField.setAccessible(true);
+            CraftCommandMap commandMap = (CraftCommandMap)commandMapField.get(spm);
 
-                    ArrayList<String> returns = onTabComplete(event.getPlayer(), event.getPacket().getStrings().read(0));
+            System.out.print(commandMap.getClass() + " fields: " + Arrays.toString(commandMap.getClass().getDeclaredFields()));
 
-                    Collections.sort(returns, String.CASE_INSENSITIVE_ORDER);
+            Field knownCommandsField = commandMap.getClass().getSuperclass().getDeclaredField("knownCommands");
+            knownCommandsField.setAccessible(true);
 
-                    if (returns.isEmpty())
-                        return;
+            Map<String, Command> knownCommands = (Map<String, Command>)knownCommandsField.get(commandMap);
+            Iterator<Map.Entry<String, Command>> itr = knownCommands.entrySet().iterator();
 
-                    String[] arg = returns.toArray(new String[0]);
-
-                    _protocolManager.sendServerPacket(event.getPlayer(), _constructor.createPacket((Object) arg));
-                }
-                catch (Exception e) {
-                    UtilError.handle(e);
-                }
+            while (itr.hasNext()) {
+                Command command = (Command)((Map.Entry)itr.next()).getValue();
+                command.setPermission("admincommand.bukkit" + command.getName());
+                command.setPermissionMessage(C.DRed + "You do not have permission to use this command");
+                command.getPermission();
             }
-        });
+        } catch (NoSuchFieldException|IllegalAccessException e) {
+            UtilError.handle(e);
+        }
 
         registerCommand(new CommandGamemode());
         registerCommand(new CommandTeleport());
@@ -155,48 +142,16 @@ public class CommandManager extends MiniPlugin {
         player.sendMessage(C.DRed + "Command not found");
     }
 
-    private ArrayList<String> onTabComplete(Player player, String message) {
-        String token = message.substring(message.lastIndexOf(" ") + 1);
-
-        ArrayList<String> completions = new ArrayList<String>();
-
-        if (!message.startsWith("/")) {
-            for (Player p : UtilPlayer.getPlayers()) {
-                if (p.getName().toLowerCase().startsWith(token.toLowerCase())) {
-                    completions.add(p.getName());
-                }
-            }
-
-            return completions;
-        }
-
-        String alias = message.split(" ")[0].substring(1);
-
-        PlayerRank rank = _rankManager.getRank(player);
-
-        for (SimpleCommand simpleCommand : _commands) {
-            if (!simpleCommand.canUse(player, rank)) {
+    private ArrayList<String> onTabComplete(Player player, String alias, String token, String[] args) {
+        ArrayList<String> completions = new ArrayList<>();
+        PlayerRank rank = this._rankManager.getRank(player);
+        for (SimpleCommand simpleCommand : this._commands) {
+            if (!simpleCommand.canUse(player, rank))
                 continue;
-            }
-
-            if (!token.equals(message)) {
-                if (!simpleCommand.isAlias(alias)) {
-                    continue;
-                }
-
-                String arg = message.substring(message.split(" ")[0].length() + 1, message.length() - token.length()).trim();
-
-                String[] args = arg.isEmpty() ? new String[0] : arg.split(" ");
-
-                simpleCommand.onTab(player, rank, args, token, completions);
-            }
-            else {
-                for (String s : simpleCommand.getAliasesStarting(alias)) {
-                    completions.add("/" + s);
-                }
-            }
+            if (!simpleCommand.isAlias(alias))
+                continue;
+            simpleCommand.onTab(player, rank, args, token, completions);
         }
-
         return completions;
     }
 
@@ -206,6 +161,17 @@ public class CommandManager extends MiniPlugin {
                 throw new IllegalArgumentException(
                         "The command '" + commandAlias + "' is already registered to " + getCommand(commandAlias));
             }
+        }
+
+        try {
+            Field bukkitCommandMap = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+            bukkitCommandMap.setAccessible(true);
+
+            CommandMap commandMap = (CommandMap)bukkitCommandMap.get(Bukkit.getServer());
+            commandMap.register(command.getAliases()[0], new BukitCommand(command, (Plugin)getPlugin()));
+
+        } catch (NoSuchFieldException|IllegalAccessException e) {
+            UtilError.handle(e);
         }
 
         _commands.add(command);
@@ -219,5 +185,44 @@ public class CommandManager extends MiniPlugin {
     public void unregisterCommand(SimpleCommand command) {
         _commands.remove(command);
         command.setPlugin(null);
+    }
+
+    public class BukitCommand extends Command implements PluginIdentifiableCommand {
+        private final Plugin _plugin;
+
+        private final SimpleCommand _simpleCommand;
+
+        protected BukitCommand(SimpleCommand command, Plugin plugin) {
+            super(command.getAliases()[0]);
+            this._plugin = plugin;
+            this._simpleCommand = command;
+            if (command.isAdminCommand()) {
+                try {
+                    Bukkit.getPluginManager().addPermission(new Permission("admincommand." + command.getAliases()[0]));
+                    setPermission("admincommand." + command.getAliases()[0]);
+                } catch (IllegalArgumentException e) {
+                    Bukkit.getPluginManager().addPermission(new Permission("admincommand." + command.getAliases()[0] + "1"));
+                    setPermission("admincommand." + command.getAliases()[0] + "1");
+                }
+                setPermissionMessage(C.DRed + "You do not have permission to use this command");
+            }
+        }
+
+        public boolean execute(CommandSender commandSender, String s, String[] strings) {
+            return false;
+        }
+
+        public List<String> tabComplete(CommandSender commandSender, String alias, String[] args) throws IllegalArgumentException {
+            if (!(commandSender instanceof Player))
+                return new ArrayList<>();
+            Player player = (Player)commandSender;
+            ArrayList<String> returns = onTabComplete(player, alias, args[args.length - 1], args);
+            returns.sort(String.CASE_INSENSITIVE_ORDER);
+            return returns;
+        }
+
+        public Plugin getPlugin() {
+            return this._plugin;
+        }
     }
 }
