@@ -469,7 +469,7 @@ public class Hologram
 
             if (!canSee.isEmpty())
             {
-                ArrayList<PacketContainer> packets = new ArrayList<PacketContainer>();
+                ArrayList<PacketContainer> packets = new ArrayList<>();
 
                 Vector vec = getLocation().toVector().subtract(oldLocation.toVector());
                 long x = getLong(vec.getX());
@@ -489,10 +489,11 @@ public class Hologram
                         packets.add(packet);
 
                         StructureModifier<Integer> ints = packet.getIntegers();
+                        StructureModifier<Short> shorts = packet.getShorts();
                         ints.write(0, _entityIds.get(index));
-                        ints.write(1, (int) x);
-                        ints.write(2, (int) y);
-                        ints.write(3, (int) z);
+                        shorts.write(0, (short) x);
+                        shorts.write(1, (short) y);
+                        shorts.write(2, (short) z);
                     }
                 }
                 else

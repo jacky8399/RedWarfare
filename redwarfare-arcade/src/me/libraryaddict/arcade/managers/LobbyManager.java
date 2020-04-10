@@ -105,6 +105,7 @@ public class LobbyManager extends MiniPlugin {
     }
 
     public void drawScoreboard() {
+
         int size = UtilPlayer.getPlayers().size();
         int minPlayers = getMinPlayers();
         GameState state = getGame().getState();

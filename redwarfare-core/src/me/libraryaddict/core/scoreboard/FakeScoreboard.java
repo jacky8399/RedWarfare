@@ -1,5 +1,6 @@
 package me.libraryaddict.core.scoreboard;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -7,6 +8,7 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import me.libraryaddict.core.utils.UtilError;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -335,4 +337,6 @@ public class FakeScoreboard
     {
         setDisplayName(DisplaySlot.SIDEBAR, title);
     }
+
+
 }

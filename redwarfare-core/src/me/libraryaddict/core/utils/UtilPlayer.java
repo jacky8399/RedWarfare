@@ -6,7 +6,7 @@ import me.libraryaddict.core.Pair;
 import me.libraryaddict.core.condition.ConditionManager;
 import me.libraryaddict.core.fancymessage.FancyMessage;
 import me.libraryaddict.core.recharge.Recharge;
-import me.libraryaddict.disguise.utilities.ReflectionManager;
+import me.libraryaddict.disguise.utilities.reflection.ReflectionManager;
 import net.minecraft.server.v1_15_R1.FoodMetaData;
 import net.minecraft.server.v1_15_R1.Packet;
 import org.bukkit.Bukkit;

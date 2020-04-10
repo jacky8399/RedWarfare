@@ -20,7 +20,7 @@ import me.libraryaddict.core.Pair;
 import me.libraryaddict.core.utils.UtilEnt;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.MetaIndex;
-import me.libraryaddict.disguise.utilities.ReflectionManager;
+import me.libraryaddict.disguise.utilities.reflection.ReflectionManager;
 
 public class FakeEntityData
 {
@@ -128,7 +128,7 @@ public class FakeEntityData
     {
         ArrayList<WrappedWatchableObject> list = new ArrayList<WrappedWatchableObject>();
 
-        ArrayList<MetaIndex> types = MetaIndex.getFlags(DisguiseType.getType(_entityType).getWatcherClass());
+        ArrayList<MetaIndex> types = MetaIndex.getMetaIndexes(DisguiseType.getType(_entityType).getWatcherClass());
 
         for (MetaIndex type : types)
         {
@@ -139,7 +139,7 @@ public class FakeEntityData
                 obj = _flags.get(type);
             }
 
-            WrappedWatchableObject watchable = ReflectionManager.createWatchable(type.getIndex(), obj);
+            WrappedWatchableObject watchable = ReflectionManager.createWatchable(type, obj);
 
             if (watchable == null || Registry.get(watchable.getValue().getClass()) == null)
                 continue;

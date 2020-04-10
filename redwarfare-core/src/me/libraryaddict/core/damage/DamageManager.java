@@ -78,13 +78,13 @@ public class DamageManager extends MiniPlugin
             _hurtSound = EntityLiving.class.getDeclaredMethod("c", DamageSource.class);
             _hurtSound.setAccessible(true);
 
-            _deathSound = EntityLiving.class.getDeclaredMethod("cf");
+            _deathSound = EntityLiving.class.getDeclaredMethod("getSoundDeath");
             _deathSound.setAccessible(true);
 
-            _radius = EntityLiving.class.getDeclaredMethod("cq");
+            _radius = EntityLiving.class.getDeclaredMethod("getSoundVolume");
             _radius.setAccessible(true);
 
-            _pitch = EntityLiving.class.getDeclaredMethod("cr");
+            _pitch = EntityLiving.class.getDeclaredMethod("dn");
             _pitch.setAccessible(true);
         }
         catch (Exception ex)
