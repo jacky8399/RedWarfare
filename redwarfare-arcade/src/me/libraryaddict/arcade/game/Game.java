@@ -42,7 +42,7 @@ import me.libraryaddict.core.utils.*;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.PlayerDisguise;
 import me.libraryaddict.disguise.disguisetypes.watchers.PlayerWatcher;
-import me.libraryaddict.disguise.utilities.ReflectionManager;
+import me.libraryaddict.disguise.utilities.reflection.ReflectionManager;
 import me.libraryaddict.network.Pref;
 import net.minecraft.server.v1_15_R1.EntityItem;
 import net.minecraft.server.v1_15_R1.WorldServer;
@@ -988,13 +988,7 @@ public abstract class Game implements Listener {
 
         ArrayList<Kit> list = new ArrayList<Kit>(Arrays.asList(getKits()));
 
-        Collections.sort(list, new Comparator<Kit>() {
-
-            @Override
-            public int compare(Kit o1, Kit o2) {
-                return String.CASE_INSENSITIVE_ORDER.compare(o1.getName(), o2.getName());
-            }
-        });
+        Collections.sort(list, (o1, o2) -> String.CASE_INSENSITIVE_ORDER.compare(o1.getName(), o2.getName()));
 
         _kits = list.toArray(new Kit[0]);
 
@@ -1037,13 +1031,7 @@ public abstract class Game implements Listener {
 
         FakeScoreboard board = getManager().getScoreboard().getMainScoreboard();
 
-        FakeScoreboard specs = getScoreboard().createScoreboard("Spectators", new Predicate<Player>() {
-
-            @Override
-            public boolean apply(Player player) {
-                return getTeam(player) == null;
-            }
-        });
+        FakeScoreboard specs = getScoreboard().createScoreboard("Spectators", player -> getTeam(player) == null);
 
         board.addChild(specs);
 
@@ -1079,7 +1067,8 @@ public abstract class Game implements Listener {
         PlayerDisguise disguise = new PlayerDisguise(gameProfile);
 
         PlayerWatcher playerWatcher = disguise.getWatcher();
-        playerWatcher.setSleeping(getSleepingFace(deadPlayer.getLocation()));
+        //playerWatcher.setSleeping(getSleepingFace(deadPlayer.getLocation()));
+        playerWatcher.setSleeping(true);
 
         DisguiseAPI.disguiseNextEntity(disguise);
 

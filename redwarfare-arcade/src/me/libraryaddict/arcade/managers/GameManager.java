@@ -26,7 +26,7 @@ import me.libraryaddict.core.scoreboard.FakeTeam;
 import me.libraryaddict.core.time.TimeEvent;
 import me.libraryaddict.core.time.TimeType;
 import me.libraryaddict.core.utils.*;
-import me.libraryaddict.disguise.utilities.ReflectionManager;
+import me.libraryaddict.disguise.utilities.reflection.ReflectionManager;
 import me.libraryaddict.redis.operations.RedisJoinServerType;
 import net.minecraft.server.v1_15_R1.EnumItemSlot;
 import net.minecraft.server.v1_15_R1.MinecraftServer;

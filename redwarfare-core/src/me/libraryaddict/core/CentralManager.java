@@ -27,6 +27,7 @@ import me.libraryaddict.core.messaging.MessageManager;
 import me.libraryaddict.core.player.PlayerDataManager;
 import me.libraryaddict.core.plugin.MiniPlugin;
 import me.libraryaddict.core.preference.PreferenceManager;
+import me.libraryaddict.core.rank.Rank;
 import me.libraryaddict.core.ranks.RankManager;
 import me.libraryaddict.core.redeem.RedeemManager;
 import me.libraryaddict.core.referal.ReferalManager;
@@ -67,6 +68,8 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.world.WorldLoadEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.permissions.Permission;
+import org.bukkit.permissions.PermissionAttachment;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
@@ -269,12 +272,12 @@ public abstract class CentralManager extends MiniPlugin {
                         } else {
                             PacketContainer toSend = new PacketContainer(PacketType.Play.Server.REL_ENTITY_MOVE);
 
-                            StructureModifier<Integer> pInts = packet.getIntegers();
-                            StructureModifier<Integer> ints = toSend.getIntegers();
+                            StructureModifier<Short> pShorts = packet.getShorts();
+                            StructureModifier<Short> shorts = toSend.getShorts();
 
-                            ints.write(0, pInts.read(0));
-                            ints.write(1, pInts.read(1));
-                            ints.write(2, pInts.read(2));
+                            shorts.write(0, pShorts.read(0));
+                            shorts.write(1, pShorts.read(1));
+                            shorts.write(2, pShorts.read(2));
 
                             PacketContainer[] move = new PacketContainer[4];
 
@@ -518,6 +521,18 @@ public abstract class CentralManager extends MiniPlugin {
 
         player.getAttribute(Attribute.GENERIC_ATTACK_SPEED)
                 .addModifier(new AttributeModifier("Disable Attack", 200, AttributeModifier.Operation.ADD_NUMBER));
+
+        for (Permission permission : Bukkit.getPluginManager().getPermissions()) {
+            if (_rankManager.getRank(player).hasRank(Rank.MOD)) {
+                if (permission.getName().startsWith("admincommand.bukkit"))
+                    continue;
+                HashMap<UUID, PermissionAttachment> perms = new HashMap<>();
+                PermissionAttachment attachment = player.addAttachment(getPlugin());
+                perms.put(player.getUniqueId(), attachment);
+                PermissionAttachment pperms = perms.get(player.getUniqueId());
+                pperms.setPermission(permission, true);
+            }
+        }
     }
 
     @EventHandler

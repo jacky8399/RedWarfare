@@ -1,40 +1,40 @@
 package me.libraryaddict.arcade.game.searchanddestroy.abilities;
 
+import java.util.UUID;
 import me.libraryaddict.arcade.game.GameTeam;
 import me.libraryaddict.core.utils.UtilTime;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import java.util.UUID;
-
-public class Barricade
-{
+public class Barricade {
     private Block _block;
+
     private Player _owner;
+
     private GameTeam _team;
+
     private boolean _active;
+
     private int _regenTime = 0;
 
     public Barricade(Block block, Player owner, GameTeam team) {
-        _block = block;
-        _owner = owner;
-        _team = team;
-        _active = true;
+        this._block = block;
+        this._owner = owner;
+        this._team = team;
+        this._active = true;
     }
 
     public void destroy() {
         getBlock().setType(Material.AIR);
-        _active = false;
-        _regenTime = 0;
+        this._active = false;
+        this._regenTime = 0;
     }
 
-    public void regenerate() {
-
-    }
+    public void regenerate() {}
 
     public Block getBlock() {
-        return _block;
+        return this._block;
     }
 
     public void setBlock(Block _block) {
@@ -42,7 +42,7 @@ public class Barricade
     }
 
     public Player getOwner() {
-        return _owner;
+        return this._owner;
     }
 
     public void setOwner(Player _owner) {
@@ -50,19 +50,19 @@ public class Barricade
     }
 
     public boolean isOwner(UUID uuid) {
-        return _owner.getUniqueId() == uuid;
+        return (this._owner.getUniqueId() == uuid);
     }
 
     public void setRegenTime(int delay) {
-        _regenTime = UtilTime.currentTick + delay;
+        this._regenTime = UtilTime.currentTick + delay;
     }
 
     public int getRegenTime() {
-        return _regenTime;
+        return this._regenTime;
     }
 
     public GameTeam getTeam() {
-        return _team;
+        return this._team;
     }
 
     public void setTeam(GameTeam _team) {
@@ -70,7 +70,7 @@ public class Barricade
     }
 
     public boolean isActive() {
-        return _active;
+        return this._active;
     }
 
     public void setActive(boolean _active) {

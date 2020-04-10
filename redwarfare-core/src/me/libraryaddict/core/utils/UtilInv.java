@@ -2,6 +2,7 @@ package me.libraryaddict.core.utils;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
 import org.bukkit.entity.Player;
@@ -28,54 +29,49 @@ public class UtilInv {
             field.setAccessible(true);
             field.setBoolean(null, true);
 
-            int i = 0;
+            _visual = new Enchantment(NamespacedKey.minecraft("rwfenchant")) {
+                @Override
+                public String getName() {
+                    return "Dull";
+                }
 
-            for (Enchantment enchantment : Enchantment.values()) {
-                _visual = new Enchantment(enchantment.getKey()) {
-                    @Override
-                    public String getName() {
-                        return "Dull";
-                    }
+                @Override
+                public int getMaxLevel() {
+                    return 1;
+                }
 
-                    @Override
-                    public int getMaxLevel() {
-                        return 1;
-                    }
+                @Override
+                public int getStartLevel() {
+                    return 1;
+                }
 
-                    @Override
-                    public int getStartLevel() {
-                        return 1;
-                    }
+                @Override
+                public EnchantmentTarget getItemTarget() {
+                    return EnchantmentTarget.ALL;
+                }
 
-                    @Override
-                    public EnchantmentTarget getItemTarget() {
-                        return EnchantmentTarget.ALL;
-                    }
+                @Override
+                public boolean isTreasure() {
+                    return false;
+                }
 
-                    @Override
-                    public boolean isTreasure() {
-                        return false;
-                    }
+                @Override
+                public boolean isCursed() {
+                    return false;
+                }
 
-                    @Override
-                    public boolean isCursed() {
-                        return false;
-                    }
+                @Override
+                public boolean conflictsWith(Enchantment other) {
+                    return false;
+                }
 
-                    @Override
-                    public boolean conflictsWith(Enchantment enchantment) {
-                        return false;
-                    }
+                @Override
+                public boolean canEnchantItem(ItemStack item) {
+                    return true;
+                }
+            };
 
-                    @Override
-                    public boolean canEnchantItem(ItemStack itemStack) {
-                        return true;
-                    }
-                };
-
-                Enchantment.registerEnchantment(_visual);
-                break;
-            }
+            Enchantment.registerEnchantment(_visual);
             /*
             while (true) {
                 if (Enchantment.getById(++i) != null)
@@ -127,8 +123,7 @@ public class UtilInv {
                 Enchantment.registerEnchantment(_visual);
                 break;
             }*/
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             UtilError.handle(e);
         }
     }
@@ -288,20 +283,20 @@ public class UtilInv {
         PlayerInventory inv = player.getInventory();
 
         switch (equipSlot) {
-        case HAND:
-            return inv.getItemInMainHand();
-        case OFF_HAND:
-            return inv.getItemInOffHand();
-        case FEET:
-            return inv.getBoots();
-        case LEGS:
-            return inv.getLeggings();
-        case CHEST:
-            return inv.getChestplate();
-        case HEAD:
-            return inv.getHelmet();
-        default:
-            break;
+            case HAND:
+                return inv.getItemInMainHand();
+            case OFF_HAND:
+                return inv.getItemInOffHand();
+            case FEET:
+                return inv.getBoots();
+            case LEGS:
+                return inv.getLeggings();
+            case CHEST:
+                return inv.getChestplate();
+            case HEAD:
+                return inv.getHelmet();
+            default:
+                break;
         }
 
         return null;
@@ -309,16 +304,16 @@ public class UtilInv {
 
     public static Material getLeatherItem(EquipmentSlot slot) {
         switch (slot) {
-        case HEAD:
-            return Material.LEATHER_HELMET;
-        case CHEST:
-            return Material.LEATHER_CHESTPLATE;
-        case LEGS:
-            return Material.LEATHER_LEGGINGS;
-        case FEET:
-            return Material.LEATHER_BOOTS;
-        default:
-            return null;
+            case HEAD:
+                return Material.LEATHER_HELMET;
+            case CHEST:
+                return Material.LEATHER_CHESTPLATE;
+            case LEGS:
+                return Material.LEATHER_LEGGINGS;
+            case FEET:
+                return Material.LEATHER_BOOTS;
+            default:
+                return null;
         }
     }
 
@@ -478,7 +473,7 @@ public class UtilInv {
     public static int remove(Player player, ItemStack removeItem, Material removeMat, int amount) {
         PlayerInventory inv = player.getInventory();
 
-        for (EquipmentSlot heldSlot : new EquipmentSlot[] {
+        for (EquipmentSlot heldSlot : new EquipmentSlot[]{
                 EquipmentSlot.OFF_HAND, EquipmentSlot.HAND
         }) {
             if (amount <= 0)
@@ -492,8 +487,7 @@ public class UtilInv {
             if (item.getAmount() > amount) {
                 item.setAmount(item.getAmount() - amount);
                 amount = 0;
-            }
-            else {
+            } else {
                 setItem(player, heldSlot, new ItemStack(Material.AIR));
 
                 amount -= item.getAmount();
@@ -513,8 +507,7 @@ public class UtilInv {
                 item.setAmount(item.getAmount() - amount);
 
                 amount = 0;
-            }
-            else {
+            } else {
                 inv.setItem(slot, new ItemStack(Material.AIR));
 
                 amount -= item.getAmount();
@@ -528,8 +521,7 @@ public class UtilInv {
                 item.setAmount(item.getAmount() - amount);
 
                 amount = 0;
-            }
-            else {
+            } else {
                 player.setItemOnCursor(new ItemStack(Material.AIR));
 
                 amount -= item.getAmount();
@@ -552,8 +544,7 @@ public class UtilInv {
                     item.setAmount(item.getAmount() - amount);
 
                     amount = 0;
-                }
-                else {
+                } else {
                     topInv.setItem(slot, new ItemStack(Material.AIR));
 
                     amount -= item.getAmount();
@@ -576,8 +567,7 @@ public class UtilInv {
                 item.setAmount(item.getAmount() - amount);
 
                 amount = 0;
-            }
-            else {
+            } else {
                 armor[slot] = new ItemStack(Material.AIR);
 
                 amount -= item.getAmount();
@@ -603,26 +593,26 @@ public class UtilInv {
         PlayerInventory inv = player.getInventory();
 
         switch (equipSlot) {
-        case HAND:
-            inv.setItemInMainHand(item);
-            break;
-        case OFF_HAND:
-            inv.setItemInOffHand(item);
-            break;
-        case FEET:
-            inv.setBoots(item);
-            break;
-        case LEGS:
-            inv.setLeggings(item);
-            break;
-        case CHEST:
-            inv.setChestplate(item);
-            break;
-        case HEAD:
-            inv.setHelmet(item);
-            break;
-        default:
-            break;
+            case HAND:
+                inv.setItemInMainHand(item);
+                break;
+            case OFF_HAND:
+                inv.setItemInOffHand(item);
+                break;
+            case FEET:
+                inv.setBoots(item);
+                break;
+            case LEGS:
+                inv.setLeggings(item);
+                break;
+            case CHEST:
+                inv.setChestplate(item);
+                break;
+            case HEAD:
+                inv.setHelmet(item);
+                break;
+            default:
+                break;
         }
     }
 }

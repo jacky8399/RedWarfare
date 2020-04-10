@@ -126,7 +126,7 @@ public class SearchAndDestroy extends TeamGame
 
         ArrayList<GameTeam> teams = getTeams(true);
 
-        Collections.sort(teams, GameTeam.COMPARE_PLAYERS);
+        teams.sort(GameTeam.COMPARE_PLAYERS);
 
         ArrayList<String> lines = new ArrayList<String>();
 
@@ -191,6 +191,7 @@ public class SearchAndDestroy extends TeamGame
             lines.remove(lines.size() - 1);
 
         board.setSidebar(lines);
+        Bukkit.getOnlinePlayers().forEach(o -> o.setScoreboard(board.getScoreboard()));
     }
 
     public ArrayList<TeamBomb> getBombs()
@@ -335,10 +336,10 @@ public class SearchAndDestroy extends TeamGame
             Material mat = block.getType();
 
 
-            if (mat.toString().endsWith("SPAWN_EGG"))
+            if (mat.toString().startsWith("INFESTED"))
                 continue;
 
-            if (mat.isBlock())
+            if (!mat.isTransparent())
                 block.setType(Material.COAL_BLOCK);
             else if (mat.name().contains("SLAB") || mat.name().contains("STEP"))
             {

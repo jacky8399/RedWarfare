@@ -743,7 +743,7 @@ public class UtilItem
     public static ArrayList<String> getCompletions(String name, boolean blockOnly)
     {
         return blockOnly
-                ? Arrays.stream(Material.values()).filter(Material::isBlock).map(String::valueOf).filter(s -> s.toLowerCase().startsWith(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new))
+                ? Arrays.stream(Material.values()).filter(material -> !material.isTransparent()).map(String::valueOf).filter(s -> s.toLowerCase().startsWith(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new))
                 : Arrays.stream(Material.values()).map(String::valueOf).filter(s -> s.toLowerCase().startsWith(name.toLowerCase())).collect(Collectors.toCollection(ArrayList::new));
     }
 }

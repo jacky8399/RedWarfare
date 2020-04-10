@@ -15,6 +15,7 @@ import org.bukkit.util.Vector;
 
 import java.lang.reflect.Field;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class UtilEnt {
     public static double getAbsorptionHearts(Entity entity) {
@@ -119,13 +120,14 @@ public class UtilEnt {
             Field field = net.minecraft.server.v1_15_R1.Entity.class.getDeclaredField("entityCount");
             field.setAccessible(true);
 
-            int id = field.getInt(null);
-
+            AtomicInteger id = (AtomicInteger) field.get(null);
+            System.out.print(field.get(null));
             if (increment) {
-                field.setInt(null, id + 1);
+                id.incrementAndGet();
             }
+            System.out.print(field.get(null));
 
-            return id;
+            return id.get();
         }
         catch (Exception ex) {
             UtilError.handle(ex);

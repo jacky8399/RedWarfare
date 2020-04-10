@@ -39,8 +39,8 @@ public class FakeTeam
         _fakeScoreboard = fakeScoreboard;
 
         _teamPacket.getStrings().write(0, teamName);
-        _teamPacket.getStrings().write(1, teamName);
-        _teamPacket.getIntegers().write(1, 2);
+        _teamPacket.getChatComponents().write(0, WrappedChatComponent.fromText(teamName));
+        _teamPacket.getIntegers().write(0, 2);
 
         writePacketOption();
     }
@@ -375,7 +375,7 @@ public class FakeTeam
             m |= 0x2;
         }
 
-        _teamPacket.getIntegers().write(2, m);
+        _teamPacket.getIntegers().write(1, m);
     }
 
 }
